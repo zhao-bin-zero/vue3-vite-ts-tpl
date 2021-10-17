@@ -1,0 +1,125 @@
+//== 定位
+
+//== display
+.hidden {
+  display: none;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.block {
+  display: block;
+}
+
+//== text-align
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-initial {
+  text-align: initial;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+.clearfix {
+  &:before,
+  &:after {
+    content: ""; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.text-inline {
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.space-nowrap {
+  white-space: nowrap;
+}
+
+
+// css3垂直居中
+.item-center {
+  display: flex;
+  align-items: center;
+}
+// 水平两侧对齐
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+.space-between-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.justify-center {
+  display: flex;
+  justify-content: center;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.justify-evenly {
+  display: flex;
+  justify-content: space-between;
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+  }
+}
+.justify-flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.display-flex{
+  display: flex;
+}
+.flex1 {
+  flex: 1;
+  overflow: hidden;
+}
+.flex0 {
+  flex: 0;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-dir-column {
+  flex-direction: column;
+}
+
+// 图片太大时显示中间部分
+.img-center {
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  > img {
+    max-width: initial;
+    // height: 100%;
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+  }
+}

@@ -1,0 +1,99 @@
+// btn base样式
+.btn {
+}
+.btn:hover {
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+  // color: #fff;
+}
+// button大小
+//超大型
+// .btn-xl {
+//   height: 58px;
+//   line-height: 58px;
+//   padding: 0 50px;
+//   font-size: 26px;
+// }
+// 大型
+// .btn-lg {
+//   height: 44px;
+//   line-height: 44px;
+//   padding: 0 25px;
+//   font-size: 16px;
+// }
+// 小型
+// .btn-sm {
+//   height: 30px;
+//   line-height: 30px;
+//   padding: 0 10px;
+//   font-size: 14px;
+// }
+// 迷你
+// .btn-xs {
+//   height: 22px;
+//   line-height: 22px;
+//   padding: 0 5px;
+//   font-size: 12px;
+// }
+
+// <el-button size=""></el-button>
+// el-button--default 40px
+// el-button--medium 36px
+// el-button--small 32px
+// el-button--mini 28px
+
+// width100%
+.btn-100 {
+  width: 100%;
+}
+
+.btn-200 {
+  min-width: 200px;
+}
+
+.btn-300 {
+  min-width: 300px;
+}
+
+// 圆角
+// <el-button round>100%</el-button>
+// .btn-radius {
+//   border-radius: 100px;
+// }
+// .btn-radius10 {
+//   border-radius: 10px;
+// }
+
+// @include responsive(phone-screens) {
+//   .btn {
+//     min-width: px2rem(240);
+//   }
+// }
+
+// 颜色
+.link-color {
+  &,
+  &:hover,
+  &:focus,
+  &:active {
+    color: $linkColor;
+  }
+}
+.btn-primary {
+  &,
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: $mainBtnBg;
+    background-color: $mainBtnBg;
+  }
+}
+.btn-primary2 {
+  &,
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: $mainBtnBg2;
+    background-color: $mainBtnBg2;
+  }
+}
