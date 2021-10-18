@@ -16,5 +16,5 @@ module.exports = {
   proseWrap: 'never', // 默认值。因为使用了一些折行敏感型的渲染器（如GitHub comment）而按照markdown文本样式进行折行
   htmlWhitespaceSensitivity: 'strict',  // 空格被认为是敏感的
   endOfLine: 'auto', // 结尾是 \n \r \n\r auto
-  rangeStart: 0,
+  rangeStart: 0
 }
