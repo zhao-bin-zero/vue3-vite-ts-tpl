@@ -1,6 +1,7 @@
 import type { ConfigEnv, UserConfigExport } from 'vite'
 import { defineConfig } from 'vite'
 import vuePlugin from '@vitejs/plugin-vue'
+// import eslintPlugin from 'vite-plugin-eslint'
 import path from 'path'
 const resolve = (dir: string) => path.join(__dirname, dir)
 
@@ -8,7 +9,14 @@ const resolve = (dir: string) => path.join(__dirname, dir)
 export default ({ mode }: ConfigEnv): UserConfigExport => {
   console.log('mode', mode)
   return defineConfig({
-    plugins: [vuePlugin()],
+    plugins: [
+      vuePlugin()
+      // 实时进行eslint编译，会影响错误测试，故注释
+      // eslintPlugin({
+      //   cache: false,
+      //   include: ['src/**/*.vue', 'src/**/*.ts', 'src/**/*.tsx']
+      // })
+    ],
     css: {
       preprocessorOptions: {
         scss: {

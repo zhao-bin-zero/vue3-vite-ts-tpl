@@ -103,7 +103,7 @@
       }
       // 发送验证码
       const sendCode = () => {
-        loginFormInstance.value?.validateField('phone', async (err) => {
+        loginFormInstance.value?.validateField('phone', async (err: string) => {
           console.log('validateField', err)
           if (err) return false
           try {
