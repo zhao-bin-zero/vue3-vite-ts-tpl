@@ -1,7 +1,7 @@
 <template>
   <!-- destroy-on-close 控制是否在关闭 Drawer 之后将子元素全部销毁-->
   <div class="loyi__drawer">
-    <el-drawer v-model="visible" direction="rtl" :lock-scroll="true">
+    <el-drawer v-model="visible" direction="rtl" :destroy-on-close="true" :lock-scroll="true">
       <template #title>
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item v-for="item in titles" :key="item">{{ item }}</el-breadcrumb-item>

@@ -4,16 +4,24 @@ export function is(val: unknown, type: string) {
   return toString.call(val) === `[object ${type}]`
 }
 
-export function isDef<T = unknown>(val?: T): val is T {
-  return typeof val !== 'undefined'
-}
-
 export function isUnDef<T = unknown>(val?: T): val is T {
-  return !isDef(val)
+  return is(val, 'Undefined')
 }
 
+export function isDef<T = unknown>(val?: T): val is T {
+  return !isUnDef(val)
+  // return typeof val !== 'undefined'
+}
+// 仅判断为对象时,dete, FormData不算
 export function isObject(val: any): val is Record<any, any> {
-  return val !== null && is(val, 'Object')
+  return is(val, 'Object')
+}
+
+export function isEmptyObj<T = unknown>(val: T): boolean {
+  if (isObject(val)) {
+    return Object.keys(val).length === 0
+  }
+  return false
 }
 
 export function isEmpty<T = unknown>(val: T): val is T {
@@ -25,11 +33,12 @@ export function isEmpty<T = unknown>(val: T): val is T {
     return val.size === 0
   }
 
-  if (isObject(val)) {
-    return Object.keys(val).length === 0
-  }
+  // if (isObject(val)) {
+  //   return Object.keys(val).length === 0
+  // }
 
-  return false
+  // return false
+  return isEmptyObj(val)
 }
 
 export function isDate(val: unknown): val is Date {
@@ -37,7 +46,8 @@ export function isDate(val: unknown): val is Date {
 }
 
 export function isNull(val: unknown): val is null {
-  return val === null
+  return is(val, 'Null')
+  // return val === null
 }
 
 export function isNullAndUnDef(val: unknown): val is null | undefined {
@@ -52,6 +62,10 @@ export function isNumber(val: unknown): val is number {
   return is(val, 'Number')
 }
 
+export function isNumberNoNaN(val: unknown): val is number {
+  return is(val, 'Number') && !isNaN(val as number)
+}
+
 export function isPromise<T = any>(val: unknown): val is Promise<T> {
   return is(val, 'Promise') && isObject(val) && isFunction(val.then) && isFunction(val.catch)
 }
@@ -61,7 +75,8 @@ export function isString(val: unknown): val is string {
 }
 
 export function isFunction(val: unknown): val is Function {
-  return typeof val === 'function'
+  return is(val, 'Function')
+  // return typeof val === 'function'
 }
 
 export function isBoolean(val: unknown): val is boolean {
@@ -73,7 +88,7 @@ export function isRegExp(val: unknown): val is RegExp {
 }
 
 export function isArray(val: any): val is Array<any> {
-  return val && Array.isArray(val)
+  return Array.isArray(val)
 }
 
 export function isWindow(val: any): val is Window {

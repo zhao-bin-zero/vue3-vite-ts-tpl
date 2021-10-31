@@ -1,6 +1,16 @@
 <template>
   <div class="login">
-    <div class="login__left"></div>
+    <div class="login__left flex-center">
+      <div class="login__left-con">
+        <div class="login__left-head justify-center">
+          <div class="login__left-welcome">WELCOME</div>
+          <div class="login__left-logo"><img src="@assets/images/login/logo.png" alt="" /></div>
+        </div>
+        <div class="login__left-bg">
+          <img src="@assets/images/login/bg.png" alt="" />
+        </div>
+      </div>
+    </div>
     <div class="login__right flex-center">
       <div class="flex1">
         <div class="login__title">登录</div>
@@ -21,7 +31,7 @@
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" class="login__submit" @click="onLogin" :disabled="!phoneIsValidate || !codeIsValidate"
+            <el-button class="login__submit btn btn-main btn-100" @click="onLogin" :disabled="!phoneIsValidate || !codeIsValidate"
               >登录</el-button
             >
           </el-form-item>
@@ -76,7 +86,7 @@
       }
       // 验证规则
       const rules = {
-        phone: [{ validator: validateMobile, trigger: 'blur' }],
+        phone: [{ validator: validateMobile, trigger: ['blur', 'change'] }],
         sms_code: [{ validator: validateCode, trigger: 'change' }]
       }
 
@@ -164,11 +174,31 @@
 </script>
 <style lang="scss" scoped>
   .login {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     background-color: $mainColor;
     .login__left {
       flex: 1;
+      padding: 0 130px 0 67px;
+      .login__left-con {
+        .login__left-head {
+          .login__left-welcome {
+            font-size: 50px;
+            font-weight: 600;
+            color: #ffffff;
+            line-height: 70px;
+          }
+          .login__left-logo {
+            margin-top: 17px;
+            margin-left: 30px;
+            width: 158px;
+          }
+        }
+        .login__left-bg {
+          max-width: 603px;
+          margin-top: 117px;
+        }
+      }
     }
     .login__right {
       width: 640px;
@@ -182,11 +212,30 @@
         color: $mainColor;
         line-height: 70px;
       }
-      .login__form {
+      :deep(.login__form) {
         margin-top: 70px;
+        .el-form-item {
+          margin-bottom: 40px;
+          .el-form-item__content {
+            .el-input__inner {
+              height: 68px;
+              line-height: 68px;
+              // border-color: $mainColor;
+            }
+            .el-input__prefix {
+              line-height: 68px;
+            }
+          }
+          // &.is-error {
+          //   border-color: var(--el-color-danger);
+          // }
+        }
       }
       .login__submit {
         margin-top: 130px;
+        font-size: 32px;
+        font-weight: 500;
+        line-height: 45px;
       }
     }
   }

@@ -78,14 +78,61 @@
   &:active {
     color: $linkColor;
   }
+  span {
+    border-bottom-color: $linkColor;
+  }
+}
+.link-info-color {
+  &,
+  &:hover,
+  &:focus,
+  &:active {
+    color: $infoColor;
+  }
+  span {
+    border-bottom-color: $infoColor;
+  }
 }
 .btn-primary {
   &,
   &:hover,
   &:focus,
   &:active {
+    color: #fff;
     border-color: $mainBtnBg;
     background-color: $mainBtnBg;
+  }
+  &.is-disabled {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      border-color: $mainBtnBg;
+      background-color: $mainBtnBg;
+      opacity: 0.8;
+      filter: alpha(opacity=80);
+    }
+  }
+}
+.btn-main {
+  &,
+  &:hover,
+  &:focus,
+  &:active {
+    color: #fff;
+    border-color: $mainColor;
+    background-color: $mainColor;
+  }
+  &.is-disabled {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      border-color: $mainColor;
+      background-color: $mainColor;
+      opacity: 0.8;
+      filter: alpha(opacity=80);
+    }
   }
 }
 .btn-primary2 {
@@ -93,7 +140,19 @@
   &:hover,
   &:focus,
   &:active {
+    color: #fff;
     border-color: $mainBtnBg2;
     background-color: $mainBtnBg2;
+  }
+  &.is-disabled {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      border-color: $mainBtnBg2;
+      background-color: $mainBtnBg2;
+      opacity: 0.8;
+      filter: alpha(opacity=80);
+    }
   }
 }

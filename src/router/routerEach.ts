@@ -30,7 +30,7 @@ export const beforEachFunc = async (to: RouteLocationNormalized, from: RouteLoca
       } else {
         // 请求用户信息
         await store.dispatch('info/getUser')
-        initRoutesFun(store.state.info.authList)
+        initRoutesFun(store.getters['info/authList'])
         // 重走拦截逻辑
         next({ ...to, replace: true })
       }

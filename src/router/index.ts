@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import { deepCopy } from '@/common/utils'
 import store from '@/store'
+import { AuthList } from '@/store/modules/info'
 import { AppRouteRecordRaw } from './types'
 import { beforEachFunc } from './routerEach'
 
@@ -63,16 +64,29 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: initRoutes as RouteRecordRaw[]
 })
-interface AuthList {
-  [key: string]: AppRouteRecordRaw[]
-}
 function navListTraver(authList: AuthList, routes: AppRouteRecordRaw[]): AppRouteRecordRaw[] {
   const list: AppRouteRecordRaw[] = []
   if (Object.keys(authList).length > 0) {
     routes.forEach((item) => {
-      if (authList[item.name]) {
-        const navObj: AppRouteRecordRaw = {} as AppRouteRecordRaw
-        Object.assign(navObj, item, authList[item.name])
+      const auth = authList[item.name]
+      if (auth) {
+        const navObj: AppRouteRecordRaw = {
+          ...item,
+          meta: {
+            // 防止前后端字段冲突
+            ...item.meta,
+            // icon,
+            // is_available,
+            // is_menu,
+            // level,
+            // parent_path,
+            // pid,
+            // sort,
+            ...auth,
+            title: auth.name
+          }
+        } as AppRouteRecordRaw
+
         if (navObj.children) {
           navObj.children = navListTraver(authList, navObj.children)
         }

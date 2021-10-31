@@ -4,6 +4,7 @@ $--color-primary: $primaryColor;
 $--color-success: $successColor;
 $--color-warning: $warnColor;
 $--color-danger: $errorColor;
+$--color-info: $infoColor;
 /* 改变 icon 字体路径变量，必需 */
 $--font-path: 'element-plus/theme-chalk/fonts';
 // 因为按需加载不能加载loading样式,所以只能先引入所有element css

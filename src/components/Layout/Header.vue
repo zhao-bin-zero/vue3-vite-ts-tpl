@@ -15,10 +15,8 @@
     <div class="header__info">
       <el-avatar class="header__info-avatar" icon="el-icon-user-solid" />
     </div>
-    <el-dropdown @command="handleCommand">
-      <span class="el-dropdown-link">
-        {{ storeGetters.user.value.admin_name }}<i class="el-icon-arrow-down el-icon--right"></i>
-      </span>
+    <el-dropdown @command="handleCommand" class="header__dropdown">
+      <span class=""> {{ storeGetters.user.value.admin_name }}<i class="el-icon-arrow-down el-icon--right"></i> </span>
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item command="loginout">退出登录</el-dropdown-item>
@@ -89,7 +87,7 @@
       color: $headerMenuColor;
       height: $headerHeight;
       font-size: 18px;
-      margin: 0 5px;
+      // margin: 0 5px;
       &.is-active {
         border-bottom-width: 0;
         background-color: $headerMenuHoverBg;
@@ -108,6 +106,11 @@
       width: 45px;
       height: 45px;
       line-height: 45px;
+    }
+  }
+  :deep(.header__dropdown) {
+    &.el-dropdown {
+      color: #fff;
     }
   }
 </style>

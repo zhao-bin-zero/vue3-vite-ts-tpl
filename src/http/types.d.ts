@@ -26,3 +26,15 @@ export interface CustomResponse<T> {
   readonly message: string
   readonly data: T
 }
+
+// 分页参数
+export interface ListPageGetParams {
+  page?: number
+  page_size?: number
+}
+
+// 分页列表返回参数
+export interface ListPageRes<T> {
+  total: number // 总数量
+  items: T[]
+}

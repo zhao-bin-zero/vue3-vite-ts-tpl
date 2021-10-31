@@ -24,7 +24,7 @@ const instance = axios.create({
 let loadingInstance: ILoadingInstance
 
 // 移除重复请求
-const removePending = (config: AxiosRequestConfig) => {
+const removePending = (config: AxiosRequestConfig, isReq?: boolean) => {
   for (const key in pending) {
     const item: number = +key
     const list: PendingType = pending[key]
@@ -33,10 +33,17 @@ const removePending = (config: AxiosRequestConfig) => {
       list.url === config.url &&
       list.method === config.method &&
       JSON.stringify(list.params) === JSON.stringify(config.params) &&
-      JSON.stringify(list.data) === JSON.stringify(config.data)
+      list.data === config.data
     ) {
-      // 执行取消操作
-      list.cancel('操作太频繁，请稍后再试')
+      // console.log(list)
+      if (isReq) {
+        // 执行取消操作
+        if (import.meta.env.MODE === 'production') {
+          list.cancel(`操作太频繁，请稍后再试!`)
+        } else {
+          list.cancel(`请求太频繁，请联系开发检查代码!!!`)
+        }
+      }
       // 从数组中移除记录
       pending.splice(item, 1)
     }
@@ -51,9 +58,19 @@ instance.interceptors.request.use(
       background: 'rgba(0, 0, 0, 0.3)'
     })
 
-    removePending(request)
+    // console.log('request', request)
+    removePending(request, true)
     request.cancelToken = new CancelToken((c) => {
-      pending.push({ url: request.url, method: request.method, params: request.params, data: request.data, cancel: c })
+      pending.push({
+        url: request.url,
+        method: request.method,
+        params: request.params,
+        data: JSON.stringify(request.data), // response.config.data返回的是JSON.stringify后的值
+        cancel: (message: string) => {
+          console.log('取消请求', message, request)
+          return c(message)
+        }
+      })
     })
     // 请求拦截，拦截成功后在请求头中设定token
     request.headers.Authorization = getCookie('token')
@@ -68,6 +85,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => {
     loadingInstance.close()
+    // console.log('response.config', response)
     removePending(response.config)
 
     return response

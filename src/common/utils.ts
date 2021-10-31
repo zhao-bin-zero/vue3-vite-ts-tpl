@@ -1,4 +1,7 @@
 // 设置cookies
+
+import { isArray, isNumberNoNaN, isObject } from './is'
+
 /**
  * @param
  *      name: 名字
@@ -317,7 +320,7 @@ export const accRem = (arg1: number, arg2: number): number => {
 }
 
 export const zeroToFixed = (num: number, digits: number): string => {
-  if (typeof num === 'number' && !isNaN(num)) {
+  if (isNumberNoNaN(num)) {
     return num.toFixed(digits)
   } else {
     return '--'
@@ -348,11 +351,11 @@ export const formatDate = (date: Date, fmt: string) => {
 }
 
 // 深拷贝
-export const deepCopy = (obj: any) => {
-  const result: any = Array.isArray(obj) ? [] : {}
+export const deepCopy: <T>(arg: T) => T = (obj) => {
+  const result: any = isArray(obj) ? [] : {}
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      if (obj[key] && typeof obj[key] === 'object') {
+      if (isObject(obj[key]) || isArray(obj[key])) {
         result[key] = deepCopy(obj[key]) //递归复制
       } else {
         result[key] = obj[key]
@@ -360,6 +363,22 @@ export const deepCopy = (obj: any) => {
     }
   }
   return result
+}
+// 将对象中的Object改为json字符串 // 后台只接受json.string
+export const objJsonStr = (params: any) => {
+  // formData对象不处理
+  if (!isObject(params)) return params
+  const obj: { [key: string]: any } = {}
+  for (const key in params) {
+    if (Object.prototype.hasOwnProperty.call(params, key)) {
+      if (isObject(params[key]) || isArray(params[key])) {
+        obj[key] = JSON.stringify(params[key])
+      } else {
+        obj[key] = params[key]
+      }
+    }
+  }
+  return obj
 }
 
 // 对象合并
@@ -379,7 +398,7 @@ export const deepCopy = (obj: any) => {
 
 //   const length = args.length //参数数量
 //   // 处理深拷贝
-//   if (typeof target === 'boolean') {
+//   if (isBoolean(target)) {
 //     deep = target
 
 //     //源对象指向第二个参数， 遍历时跳过第一个参数
