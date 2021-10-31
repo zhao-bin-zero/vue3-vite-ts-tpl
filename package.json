@@ -10,7 +10,7 @@
     "serve": "vite preview",
     "lint": "eslint . --ext .ts,.tsx,.vue --cache --color",
     "lintfix": "eslint . --ext .ts,.tsx,.vue --cache --color --fix",
-    "commit": "git-cz"
+    "commit": "git add . && git-cz"
   },
   "dependencies": {
     "axios": "^0.21.4",
