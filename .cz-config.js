@@ -2,7 +2,7 @@
 
 module.exports = {
   types: [
-    { value: 'feature', name: 'feat:     新功能' },
+    { value: 'feature', name: 'feature:     新功能' },
     { value: 'fix', name: 'fix:      修复' },
     { value: 'docs', name: 'docs:     文档变更' },
     { value: 'style', name: 'style:    代码格式(不影响代码运行的变动)' },
@@ -13,7 +13,7 @@ module.exports = {
     { value: 'revert', name: 'revert:   回退' },
     { value: 'build', name: 'build:    打包' }
   ],
-  scopes: [{ name: '组件' }, { name: '一级菜单' }, { name: '样式' }],
+  scopes: [{ name: '架构层' }, { name: '组件层' }, { name: '样式层' }, { name: '业务功能' }],
 
   // it needs to match the value for field type. Eg.: 'fix'
   /*
@@ -39,7 +39,7 @@ module.exports = {
     confirmCommit: '确认使用以上信息提交？(y/n/e/h)'
   },
   allowCustomScopes: true,
-  allowBreakingChanges: ['feat', 'fix'],
+  // allowBreakingChanges: ['feature', 'fix'],
   skipQuestions: ['body', 'footer'],
   // limit subject length, commitlint默认是72
   subjectLimit: 100
