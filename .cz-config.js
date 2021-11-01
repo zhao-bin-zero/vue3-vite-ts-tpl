@@ -15,8 +15,7 @@ module.exports = {
   ],
   scopes: [{ name: '架构层' }, { name: '组件层' }, { name: '样式层' }, { name: '业务功能' }],
 
-  // it needs to match the value for field type. Eg.: 'fix'
-  /*
+  /* it needs to match the value for field type. Eg.: 'fix'
   scopeOverrides: {
     fix: [
       {name: 'merge'},
