@@ -14,6 +14,7 @@
     </el-menu>
     <div class="header__info">
       <el-avatar class="header__info-avatar" icon="el-icon-user-solid" />
+      <!-- <img src="@assets/images/avatar.png" alt="" class="header__info-avatar" /> -->
     </div>
     <el-dropdown @command="handleCommand" class="header__dropdown">
       <span class=""> {{ storeGetters.user.value.admin_name }}<i class="el-icon-arrow-down el-icon--right"></i> </span>
@@ -55,8 +56,8 @@
               destroyToken().then((res) => {
                 console.log(res)
                 if (res.code === 10000) {
-                  ElMessage({ type: 'success', message: '退出登录成功' })
                   delCookie({ name: 'token' })
+                  ElMessage({ type: 'success', message: '退出成功' })
                   router.replace('/login')
                 }
               })

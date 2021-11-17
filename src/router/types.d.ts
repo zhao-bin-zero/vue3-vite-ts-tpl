@@ -31,9 +31,3 @@ export interface AppRouteRecordRaw extends RouteRecordRaw {
   component?: Component | string
   children?: AppRouteRecordRaw[]
 }
-
-// 接口所需类型
-export interface ListPageGetParams {
-  page?: number
-  page_size?: number
-}

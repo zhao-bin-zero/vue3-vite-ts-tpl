@@ -13,7 +13,7 @@ const urlDict: UrlDict = {
     loginApi: '/auth/getToken', // 登录
     sendSmsApi: '/auth/sendSms', // 发送验证码
     getAreaCodeApi: '/public/phone/areaCode', // 区号
-    getIndexListApi: '/index/index/list', // 用户信息
+    getUserInfoApi: '/index/index/list', // 用户信息
     uploadFileApi: '/public/upload/file', // 上传文件
     destroyTokenApi: '/auth/destroyToken' //退出登录
   }

@@ -12,8 +12,8 @@
 //
 // }
 // 接收数据中data的类型
-// declare interface TestListData {
+// declare interface TestListResType {
 //   list: []
 // }
-// export const getTestList = (params: TestGetParams): Promise<CustomResponse<TestListData>> =>
+// export const getTestList = (params: TestGetParams): Promise<CustomResponse<TestListResType>> =>
 //   http.get({ url: `Test.testListApi`, params })

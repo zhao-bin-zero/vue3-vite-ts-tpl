@@ -1,4 +1,38 @@
-//== 定位
+//== margin padding
+// [pd, mg]-[tp, bt, lf, rg]-[5, 10, 15, ..., 95, 100]
+$directions: (
+  'tp': 'top',
+  'bt': 'bottom',
+  'lf': 'left',
+  'rg': 'right'
+);
+$dimensions: (
+  'pd': 'padding',
+  'mg': 'margin'
+);
+//获取padding margin间隔
+@each $dim in $dimensions {
+  //循环四个方向
+  @each $dir in $directions {
+    @for $i from 1 through 20 {
+      $size: $i * 5;
+      .#{nth($dim,1)}-#{nth($dir,1)}-#{$size} {
+        #{nth($dim,2)}-#{nth($dir,2)}: #{$size}px;
+      }
+    }
+  }
+}
+
+//== color
+.success-text {
+  color: $successColor;
+}
+.error-text {
+  color: $errorColor;
+}
+.warn-text {
+  color: $warnColor;
+}
 
 //== display
 .hidden {
@@ -36,7 +70,7 @@
 .clearfix {
   &:before,
   &:after {
-    content: ""; // 1
+    content: ''; // 1
     display: table; // 2
   }
   &:after {
@@ -53,7 +87,6 @@
 .space-nowrap {
   white-space: nowrap;
 }
-
 
 // css3垂直居中
 .item-center {
@@ -84,7 +117,7 @@
   justify-content: space-between;
   &::before,
   &::after {
-    content: "";
+    content: '';
     display: block;
   }
 }
@@ -92,7 +125,7 @@
   display: flex;
   justify-content: flex-end;
 }
-.display-flex{
+.display-flex {
   display: flex;
 }
 .flex1 {

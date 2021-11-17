@@ -1,13 +1,13 @@
 <template>
-  <div class="loyi-pagination item-center">
-    <div>共{{ total }}条，每页显示</div>
+  <div class="loyi-pagination justify-flex-end">
     <el-pagination
       class="loyi-pagination-content"
       :current-page="currentPage"
       background
+      hide-on-single-page
       :page-sizes="pageSizesArr"
       :page-size="pageSize"
-      layout="sizes, prev, pager, next"
+      layout="prev, pager, next, sizes, total, jumper"
       :total="total"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
@@ -31,11 +31,11 @@
       },
       pageSize: {
         type: Number,
-        required: true
+        default: 20
       },
       currentPage: {
         type: Number,
-        required: true
+        default: 1
       }
     },
     emits: ['update:pageSize', 'getList'],
@@ -46,7 +46,7 @@
       const handleSizeChange = (val: number) => {
         console.log(val)
         context.emit('update:pageSize', val)
-        context.emit('getList')
+        context.emit('getList', 1)
       }
       const handleCurrentChange = (val: number) => {
         console.log(val)
@@ -66,20 +66,22 @@
     font-size: 14px;
     margin-top: 20px;
     :deep(.loyi-pagination-content) {
-      & .btn-next,
-      & .btn-prev,
-      & .el-pager li {
-        background-color: #fff !important;
-        border: 1px solid #dcdcdc !important;
-        border-radius: 4px !important;
-      }
-      & .el-pager li:not(.disabled).active {
-        background-color: $primaryColor !important;
-        color: #fff;
-        border: 0 none !important;
-      }
-      .el-pagination__sizes {
-        margin-right: 136px;
+      &.is-background {
+        .btn-next,
+        .btn-prev,
+        .el-pager li {
+          background-color: #fff;
+          border: 1px solid #dcdcdc;
+          border-radius: 4px;
+        }
+        .el-pager li:not(.disabled).active {
+          background-color: $primaryColor;
+          color: #fff;
+          border: 0 none;
+        }
+        // .el-pagination__sizes {
+        //   margin-right: 136px;
+        // }
       }
     }
   }

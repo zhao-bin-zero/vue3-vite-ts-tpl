@@ -26,8 +26,17 @@
           </el-form-item>
           <el-form-item prop="sms_code">
             <el-input v-model="loginForm.sms_code" placeholder="请输入验证码" prefix-icon="el-icon-lock" maxlength="6">
-              <template #append v-if="!isSend"> <div @click="sendCode" class="cursor-pointer">发送验证码</div> </template>
-              <template #append v-else> 验证码已发送({{ codeText }}) </template>
+              <template #append>
+                <div @click="sendCode" class="cursor-pointer">
+                  <count-down
+                    @endCallback="countDownEnd"
+                    :endTime="59"
+                    tipTextEnd="验证码已发送("
+                    endText="发送验证码"
+                    :isStart="countDownIsStart"
+                  />
+                </div>
+              </template>
             </el-input>
           </el-form-item>
           <el-form-item>
@@ -44,46 +53,29 @@
   import { defineComponent, reactive, ref } from 'vue'
   import { useRouter } from 'vue-router'
   import { ElMessage, ElForm } from 'element-plus'
-  import { login, sendSms } from '@/http/modules'
+  import { useActions } from '@/store/use'
+  import { login, LoginPostParams, sendSms } from '@/http/modules'
   import { setCookie } from '@/common/utils'
+  import { validateCode, validateMobile } from '@/common/validate'
+  import CountDown from '@/components/CountDown/index.vue'
 
   export default defineComponent({
+    components: {
+      CountDown
+    },
     setup() {
       // form实例
       let loginFormInstance = ref<typeof ElForm>()
       // 表单数据
-      const loginForm = reactive({
+      const loginForm = reactive<LoginPostParams>({
         phone: '',
-        phone_code: '',
+        // phone_code: '',
         sms_code: ''
       })
       const router = useRouter()
-      let isSend = ref<boolean>(false) // 验证码是否已经发送
-      let codeText = ref<number>(0) // 验证码是否已经发送
       let phoneIsValidate = ref<boolean>(false) // 手机号是否验证通过
       let codeIsValidate = ref<boolean>(false) // 验证码是否验证通过
 
-      // 手机号验证回调
-      const validateMobile = (rule: any, value: string, callback: (arg0?: Error) => void) => {
-        if (!value || value === '') {
-          return callback(new Error('手机号不能为空～'))
-        }
-        const RegMobile = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
-        if (!RegMobile.test(value)) {
-          return callback(new Error('手机号格式错误～'))
-        }
-        callback()
-      }
-      // 验证码验证回调
-      const validateCode = (rule: any, value: string, callback: (arg0?: Error) => void) => {
-        if (!value || value === '') {
-          return callback(new Error('验证码不能为空～'))
-        }
-        if (value.length < 6) {
-          return callback(new Error('请输入6位数验证码～'))
-        }
-        callback()
-      }
       // 验证规则
       const rules = {
         phone: [{ validator: validateMobile, trigger: ['blur', 'change'] }],
@@ -111,8 +103,13 @@
             break
         }
       }
+      let countDownIsStart = ref<boolean>(false) // 验证码是否已经发送
+      const countDownEnd = () => {
+        countDownIsStart.value = false
+      }
       // 发送验证码
       const sendCode = () => {
+        if (countDownIsStart.value) return
         loginFormInstance.value?.validateField('phone', async (err: string) => {
           console.log('validateField', err)
           if (err) return false
@@ -124,25 +121,12 @@
                 message: message,
                 type: 'success'
               })
-              countDown()
+              countDownIsStart.value = true
             }
           } catch (error) {}
         })
       }
-      // 倒计时
-      let timer: any
-      const countDown = () => {
-        if (isSend.value) return
-        codeText.value = 60
-        isSend.value = true
-        timer = setInterval(() => {
-          codeText.value--
-          if (codeText.value <= 0) {
-            clearInterval(timer)
-            isSend.value = false
-          }
-        }, 1000)
-      }
+      const storeActions = useActions('info', ['setUser'])
       const onLogin = async () => {
         const bol: boolean | undefined = await loginFormInstance.value?.validate()
         if (!bol) return
@@ -154,18 +138,21 @@
             name: 'token',
             value: token
           })
+          // 登录跳转之前清空数据
+          storeActions.setUser()
+
           router.replace('/')
         }
       }
       return {
         loginForm,
-        isSend,
-        codeText,
+        countDownIsStart,
         rules,
         loginFormInstance,
         phoneIsValidate,
         codeIsValidate,
         validateFunc,
+        countDownEnd,
         sendCode,
         onLogin
       }

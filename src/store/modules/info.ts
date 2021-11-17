@@ -1,8 +1,21 @@
 import type { Module, Store } from 'vuex'
 import { IRootState } from '@/store'
-import { getIndexInfo, getAreaCode } from '@/http/modules'
-import { EditAuthPostParams } from '@/http/modules/auth'
+import { getUserInfo, getAreaCode } from '@/http/modules'
+// import { EditAuthPostParams } from '@/http/modules/auth'
 
+interface EditAuthPostParams {
+  // 权限字段，后期应该在权限接口引入
+  id: number
+  pid: string
+  name: string
+  auth: string
+  element: string
+  icon?: string
+  is_menu?: string
+  is_available?: number
+  summary?: string
+  sort?: number
+}
 export interface AuthList {
   [key: string]: EditAuthPostParams
 }
@@ -25,7 +38,7 @@ const info: Module<InfoState, IRootState> = {
   },
   mutations: {
     SET_USER: (state, user: {}) => {
-      state.user = { ...state.user, ...user }
+      state.user = user
     },
     SET_AREACODE_LIST: (state, list: []) => {
       // 做缓存
@@ -43,10 +56,9 @@ const info: Module<InfoState, IRootState> = {
     }
   },
   actions: {
-    async getUser({ commit }) {
-      const { code, data } = await getIndexInfo()
+    async getUser({ dispatch }) {
+      const { code, data } = await getUserInfo()
       if (code === 10000) {
-        commit('SET_USER', data)
         // 测试权限数据,后期返回
         // const authList = {
         //   workbench: {
@@ -57,7 +69,11 @@ const info: Module<InfoState, IRootState> = {
         //   }
         // }
         // commit('SET_AUTH_TREE', authList)
+        dispatch('setUser', data)
       }
+    },
+    setUser({ commit }, data = {}) {
+      commit('SET_USER', data)
     },
     async getAreaCodeList({ commit, state }) {
       if (state.areaCodeList.length > 0) return
