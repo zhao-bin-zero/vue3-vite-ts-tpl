@@ -111,18 +111,18 @@
       const runTime = (startTime: number, endTime: number, callFun: Function, type?: boolean) => {
         // let msTime = msTime
         let timeDistance = startTime - endTime
-        console.log(timeDistance)
-        if (timeDistance > 0) {
+        // console.log(timeDistance)
+        if (timeDistance > 0 && Math.floor(timeDistance / 1000) !== 0) {
           msTime.show = true
-          msTime.day = Math.round(timeDistance / 86400000)
+          msTime.day = Math.floor(timeDistance / 86400000)
           timeDistance -= msTime.day * 86400000
-          msTime.hour = Math.round(timeDistance / 3600000)
+          msTime.hour = Math.floor(timeDistance / 3600000)
           timeDistance -= msTime.hour * 3600000
-          msTime.minutes = Math.round(timeDistance / 60000)
+          msTime.minutes = Math.floor(timeDistance / 60000)
           timeDistance -= msTime.minutes * 60000
           //是否开启秒表倒计,未完成
-          //                    this.secondsFixed ? msTime.seconds = new Number(timeDistance / 1000).toFixed(2) : msTime.seconds = Math.round( timeDistance / 1000 ).toFixed(0);
-          msTime.seconds = Math.round(timeDistance / 1000)
+          //                    this.secondsFixed ? msTime.seconds = new Number(timeDistance / 1000).toFixed(2) : msTime.seconds = Math.floor( timeDistance / 1000 ).toFixed(0);
+          msTime.seconds = Math.floor(timeDistance / 1000)
           timeDistance -= msTime.seconds * 1000
 
           // if (msTime.hour < 10) {
@@ -134,16 +134,16 @@
           // if (msTime.seconds < 10) {
           //   msTime.seconds = Number('0' + msTime.seconds)
           // }
-          let _s = Date.now()
-          let _e = Date.now()
-          let diffPerFunc = _e - _s
+          // let _s = Date.now()
+          // let _e = Date.now()
+          // let diffPerFunc = _e - _s
           setTimeout(() => {
             if (type) {
               runTime(end.value, (endTime += 1000), callFun, true)
             } else {
               runTime(star.value, (endTime += 1000), callFun)
             }
-          }, 1000 - diffPerFunc)
+          }, 1000)
         } else {
           callFun()
         }
@@ -173,7 +173,7 @@
         } else {
           end.value = props.endTime
         }
-        console.log(end.value)
+        // console.log(end.value)
 
         if (props.currentTime) {
           props.currentTime.toString().length === 10
